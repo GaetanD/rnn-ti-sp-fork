@@ -71,12 +71,20 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	
 	[_modalManager dismissAllModalsAnimated:NO];
 	
+
 	UIViewController *vc = [_controllerFactory createLayout:layout[@"root"]];
 	
 	[vc renderTreeAndWait:[vc.resolveOptions.animations.setRoot.waitForRender getWithDefaultValue:NO] perform:^{
-		_mainWindow.rootViewController = vc;
-		[_eventEmitter sendOnNavigationCommandCompletion:setRoot commandId:commandId params:@{@"layout": layout}];
-		completion() ;
+		[UIView transitionWithView:_mainWindow 
+ 									 	duration:0.5
+  									 options:UIViewAnimationOptionTransitionCrossDissolve & UIViewAnimationOptionCurveEaseInOut
+									animations:^{ 
+										
+			_mainWindow.rootViewController = vc;
+			[_eventEmitter sendOnNavigationCommandCompletion:setRoot commandId:commandId params:@{@"layout": layout}];
+			completion() ;
+		}
+		completion:nil];	
 	}];
 }
 
