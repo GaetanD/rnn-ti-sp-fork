@@ -60,7 +60,11 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	
 	UIViewController *vc = [_controllerFactory createLayout:layout[@"root"] saveToStore:_store];
 	
-	_mainWindow.rootViewController = vc;
+	[UIView transitionWithView:_mainWindow 
+ 									 	duration:0.5
+  									 options:UIViewAnimationOptionTransitionCrossDissolve & UIViewAnimationOptionCurveEaseInOut
+									animations:^{ _mainWindow.rootViewController = vc; }
+									completion:nil];
 	
 	[_eventEmitter sendOnNavigationCommandCompletion:setRoot params:@{@"layout": layout}];
 	completion();
