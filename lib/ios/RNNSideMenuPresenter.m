@@ -41,6 +41,15 @@
 		[sideMenuController side:MMDrawerSideRight visible:options.sideMenu.right.visible.get];
 		[options.sideMenu.right.visible consume];
 	}
+
+	[sideMenuController setAnimationType:[options.sideMenu.animationType getWithDefaultValue:nil]];
+
+	sideMenuController.openDrawerGestureModeMask = MMDrawerOpenCenterInteractionModeNone;
+	sideMenuController.centerHiddenInteractionMode = MMDrawerOpenCenterInteractionModeFull;
+	sideMenuController.shouldStretchRightDrawer = NO;
+	sideMenuController.shadowRadius = 10.0f;
+	sideMenuController.shadowOpacity = 0.4f;
+
 }
 
 - (void)applyOptionsOnInit:(RNNNavigationOptions *)initialOptions {
@@ -52,7 +61,8 @@
 	}
 	
 	if (initialOptions.sideMenu.right.width.hasValue) {
-		[sideMenuController side:MMDrawerSideRight width:initialOptions.sideMenu.right.width.get];
+		// [sideMenuController side:MMDrawerSideRight width:initialOptions.sideMenu.right.width.get];
+		[sideMenuController side:MMDrawerSideRight width: sideMenuController.view.bounds.size.width * 0.85f];
 	}
 
 		[sideMenuController setOpenDrawerGestureModeMask:[[initialOptions.sideMenu.openGestureMode getWithDefaultValue:@(MMOpenDrawerGestureModeAll)] integerValue]];
