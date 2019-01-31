@@ -148,7 +148,10 @@ public class BottomTabsController extends ParentController<BottomTabsLayout> imp
     public boolean onTabSelected(int index, boolean wasSelected) {
         eventEmitter.emitBottomTabSelected(bottomTabs.getCurrentItem(), index);
         if (wasSelected) return false;
-        selectTab(index);
+        // Don't show "Menu" tab
+        if (index != 4) {
+            selectTab(index);
+        }
         return false;
 	}
 
