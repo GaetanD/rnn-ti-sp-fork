@@ -78,7 +78,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     public void invokeDefaultOnBackPressed() {
         if (!navigator.handleBack(new CommandListenerAdapter())) {
-            super.onBackPressed();
+            // We are on a root screen (there is no stack to pop,...)
+            // We move the task to back to avoid having to run the bootstrapping logic on relaunch
+            this.moveTaskToBack(true);
         }
     }
 
