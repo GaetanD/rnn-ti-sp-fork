@@ -133,7 +133,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     protected void addDefaultSplashLayout() {
         View view = new View(this);
-        view.setBackgroundColor(Color.WHITE);
+        view.setBackgroundColor(Color.BLACK);
         setContentView(view);
     }
 
