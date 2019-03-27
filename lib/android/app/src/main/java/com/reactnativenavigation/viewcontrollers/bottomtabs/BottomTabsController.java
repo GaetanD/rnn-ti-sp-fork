@@ -140,7 +140,7 @@ public class BottomTabsController extends ParentController implements AHBottomNa
         eventEmitter.emitBottomTabSelected(bottomTabs.getCurrentItem(), index);
         if (wasSelected) return false;
         // Don't show "Menu" tab
-        if (index != 4) {
+        if (index != tabs.size() - 1) {
             selectTab(index);
         }
         return false;
