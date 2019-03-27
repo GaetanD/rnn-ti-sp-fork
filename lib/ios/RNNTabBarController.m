@@ -101,8 +101,9 @@
 
 // Fork: menu tab is only used as a placeholder, no VC should be mounted
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-	 NSUInteger selectedIndex = [tabBarController.viewControllers indexOfObject:viewController];
-	if (selectedIndex == 4) {
+	NSUInteger selectedIndex = [tabBarController.viewControllers indexOfObject:viewController];
+	NSUInteger lastTabIndex = [tabBarController.viewControllers count] - 1;
+	if (selectedIndex == lastTabIndex) {
 		// We still send the event so we can use it on the JS side
 		[_eventEmitter sendBottomTabSelected:@(4) unselected:@(_currentTabIndex)];
 		return NO;
