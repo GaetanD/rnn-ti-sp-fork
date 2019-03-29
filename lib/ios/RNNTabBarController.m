@@ -61,7 +61,7 @@
 	NSUInteger lastTabIndex = [tabBarController.viewControllers count] - 1;
 	if (selectedIndex == lastTabIndex) {
 		// We still send the event so we can use it on the JS side
-		[_eventEmitter sendBottomTabSelected:@(4) unselected:@(_currentTabIndex)];
+		[_eventEmitter sendBottomTabSelected:@(selectedIndex) unselected:@(_currentTabIndex)];
 		return NO;
 	}
 	return YES;
