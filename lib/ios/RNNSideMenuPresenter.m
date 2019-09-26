@@ -46,7 +46,7 @@
 	[sideMenuController setAnimationType:[options.sideMenu.animationType getWithDefaultValue:nil]];
 
 	sideMenuController.openDrawerGestureModeMask = MMDrawerOpenCenterInteractionModeNone;
-	sideMenuController.centerHiddenInteractionMode = MMDrawerOpenCenterInteractionModeFull;
+	sideMenuController.centerHiddenInteractionMode = MMDrawerOpenCenterInteractionModeNavigationBarOnly;
 	sideMenuController.shouldStretchRightDrawer = NO;
 	sideMenuController.shadowRadius = 10.0f;
 	sideMenuController.shadowOpacity = 0.4f;
