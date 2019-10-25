@@ -74,18 +74,34 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 
 	UIViewController *vc = [_controllerFactory createLayout:layout[@"root"]];
 	
-	[vc renderTreeAndWait:[vc.resolveOptions.animations.setRoot.waitForRender getWithDefaultValue:NO] perform:^{
-		[UIView transitionWithView:_mainWindow 
- 									 	duration:0.5
-  									 options:UIViewAnimationOptionTransitionCrossDissolve & UIViewAnimationOptionCurveEaseInOut
-									animations:^{ 
-										
+	// [TI Fork]
+	// `setRoot` is first called when we're done with the native LaunchScreen (managed by the OS) and want to load the Loading Screen (managed by React Native)
+	// This transition needs to be completely seamless these two screens are visually the same (execept for a "breath" animation of the logo in the Loding Screen)
+	static bool firstSetRootAnimation = true;
+
+	if(firstSetRootAnimation) {
+		firstSetRootAnimation = false;
+		
+		[vc renderTreeAndWait:[vc.resolveOptions.animations.setRoot.waitForRender getWithDefaultValue:NO] perform:^{
 			_mainWindow.rootViewController = vc;
 			[_eventEmitter sendOnNavigationCommandCompletion:setRoot commandId:commandId params:@{@"layout": layout}];
 			completion() ;
-		}
-		completion:nil];	
-	}];
+		}];
+		
+	} else {
+		[UIView transitionWithView:_mainWindow
+		  duration:0.5
+		   options:UIViewAnimationOptionTransitionCrossDissolve & UIViewAnimationOptionCurveEaseInOut
+		animations:^{
+		
+		[vc renderTreeAndWait:[vc.resolveOptions.animations.setRoot.waitForRender getWithDefaultValue:NO] perform:^{
+			_mainWindow.rootViewController = vc;
+			[_eventEmitter sendOnNavigationCommandCompletion:setRoot commandId:commandId params:@{@"layout": layout}];
+			completion() ;
+		}];
+		
+		} completion:nil];
+	}
 }
 
 - (void)mergeOptions:(NSString*)componentId options:(NSDictionary*)mergeOptions completion:(RNNTransitionCompletionBlock)completion {
